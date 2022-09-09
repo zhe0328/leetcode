@@ -21,21 +21,24 @@
  */
 class Solution {
 public:
-    TreeNode * buildTree(vector<int> values, int start, int end){
+    TreeNode * buildTree(ListNode* &head, int start, int end){
         if (start > end) return nullptr;
         int mid = (end-start)/2+start;
-        TreeNode * root = new TreeNode(values[mid]);
-        root->left = buildTree(values, start, mid-1);
-        root->right = buildTree(values, mid+1, end);
+        TreeNode * root = new TreeNode();
+        root->left = buildTree(head, start, mid-1);
+        root->val = head->val;
+        head = head->next;
+        root->right = buildTree(head, mid+1, end);
         return root;
     }
     TreeNode* sortedListToBST(ListNode* head) {
         if (head == nullptr) return nullptr;
-        vector<int> values;
-        while (head != nullptr){
-            values.push_back(head->val);
-            head = head->next;
+        ListNode * cur = head;
+        int n = 0;
+        while (cur != nullptr){
+            cur = cur->next;
+            n++;
         }
-        return buildTree(values, 0, values.size()-1);
+        return buildTree(head, 0, n-1);
     }
 };
