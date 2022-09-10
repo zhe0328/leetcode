@@ -11,23 +11,28 @@
  */
 class Solution {
 public:
-    int minDepth(TreeNode *root) {
-        if (root == nullptr) {
-            return 0;
+    int minDepth(TreeNode* root) {
+        if (root == nullptr) return 0;
+        int minDepth = INT_MAX;
+        stack<pair<TreeNode*, int>> stk;
+        stk.push({root,1});
+        while (!stk.empty()){
+            auto cur = stk.top();
+            stk.pop();
+            TreeNode* node = cur.first;
+            int depth = cur.second;
+            if (node->left == nullptr && node->right == nullptr){
+                if (cur.second < minDepth){
+                    minDepth = depth;
+                }
+            }
+            if (node->left != nullptr && depth+1 < minDepth) {
+                stk.push({node->left, depth+1});
+            }
+            if (node->right != nullptr && depth+1 < minDepth) {
+                stk.push({node->right, depth+1});
+            }
         }
-
-        if (root->left == nullptr && root->right == nullptr) {
-            return 1;
-        }
-
-        int min_depth = INT_MAX;
-        if (root->left != nullptr) {
-            min_depth = min(minDepth(root->left), min_depth);
-        }
-        if (root->right != nullptr) {
-            min_depth = min(minDepth(root->right), min_depth);
-        }
-
-        return min_depth + 1;
+        return minDepth;
     }
 };
