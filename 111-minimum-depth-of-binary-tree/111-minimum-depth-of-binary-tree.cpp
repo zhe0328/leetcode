@@ -26,10 +26,10 @@ public:
                     minDepth = depth;
                 }
             }
-            if (node->left != nullptr && depth < minDepth) {
+            if (node->left != nullptr && depth+1 < minDepth) {
                 stk.push({node->left, depth+1});
             }
-            if (node->right != nullptr && depth < minDepth) {
+            if (node->right != nullptr && depth+1 < minDepth) {
                 stk.push({node->right, depth+1});
             }
         }
