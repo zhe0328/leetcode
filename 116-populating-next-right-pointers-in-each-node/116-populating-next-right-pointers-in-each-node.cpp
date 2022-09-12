@@ -21,25 +21,17 @@ public:
     Node* connect(Node* root) {
         // BFS
         if (root == nullptr) return root;
-        queue<Node*> q;
-        q.push(root);
-        while (!q.empty()){
-            int size = q.size();
-            Node* pre_node = nullptr;
-            for (int i=0; i<size; i++){
-                auto node = q.front();
-                if (pre_node != nullptr){
-                    pre_node->next = node;
+        auto leftmost = root;
+        while (leftmost->left != nullptr){
+            auto head = leftmost;
+            while (head != nullptr){
+                head->left->next = head->right;
+                if (head->next != nullptr){
+                    head->right->next = head->next->left;
                 }
-                pre_node = node;
-                q.pop();
-                if (node->left != nullptr) {
-                    q.push(node->left);
-                }
-                 if (node->left != nullptr) {
-                    q.push(node->right);
-                }
+                head = head->next;
             }
+            leftmost = leftmost->left;
         }
         return root;
     }
