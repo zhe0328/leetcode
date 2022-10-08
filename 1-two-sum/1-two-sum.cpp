@@ -1,17 +1,17 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int,int> hash_map;
-        vector<int> solution;
+        unordered_map<int,int> hashMap;
+        vector<int> res;
         for (int i=0;i<nums.size();i++){
-            auto it = hash_map.find(target - nums[i]);
-            if (it != hash_map.end()){ // find 
-                solution.push_back(i);
-                solution.push_back(it->second);
-                return solution;
+            if (hashMap.find(target-nums[i]) != hashMap.end()){
+                auto idx = hashMap[target-nums[i]];
+                res.push_back(i);
+                res.push_back(idx);
+                return res;
             }
-            hash_map[nums[i]] = i;
+            hashMap[nums[i]] = i;
         }
-        return solution;
+        return res;
     }
 };
