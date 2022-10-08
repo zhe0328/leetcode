@@ -1,24 +1,27 @@
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        priority_queue<int, vector<int>, greater<int>> q; // min heap
-        unordered_map<int, vector<vector<int>>> hashMap;
-        for (auto point:points){
-            int i = point[0];
-            int j = point[1];
-            int dist2 = pow(i,2)+pow(j,2);
-            hashMap[dist2].push_back({i,j});
-            q.push(dist2);
+        priority_queue<pair<int,int>> q; // max heap <dist, idx>
+        for (int i=0; i<k; i++){
+            int m = points[i][0];
+            int n = points[i][1];
+            int dist2 = pow(m,2)+pow(n,2);
+            q.push({dist2, i});
         }
-        int cur = 0;
-        vector<vector<int>> res;
-        while (cur < k){
-            auto dist2 = q.top();
-            q.pop();
-            for (auto point: hashMap[dist2]){
-                res.push_back(point);
-                ++cur;
+        for (int i=k; i<points.size(); i++){
+            int m = points[i][0];
+            int n = points[i][1];
+            int dist2 = pow(m,2)+pow(n,2);
+            if (q.top().first > dist2){
+                q.pop();
+                q.push({dist2, i});
             }
+        }
+        vector<vector<int>> res;
+        while (!q.empty()){
+            auto idx = q.top().second;
+            q.pop();
+            res.push_back(points[idx]);
         }
         return res;
     }
