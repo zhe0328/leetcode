@@ -1,18 +1,18 @@
 class Solution {
 public:
     int maxResult(vector<int>& nums, int k) {
-        int n = nums.size();
-        vector<int> f(n);
-        f[0] = nums[0];
-        priority_queue<pair<int, int>> heap;
-        heap.emplace(nums[0], 0);
-        for (int i = 1; i < n; ++i) {
-            while (i - heap.top().second > k) {
-                heap.pop();
+        int size = nums.size();
+        vector<int> dp(size);
+        dp[0] = nums[0];
+        priority_queue<pair<int,int>> maxHeap;
+        maxHeap.push({dp[0], 0});
+        for (int i=1; i<size; i++){
+            while (i-maxHeap.top().second > k){
+                maxHeap.pop();
             }
-            f[i] = heap.top().first + nums[i];
-            heap.emplace(f[i], i);
+            dp[i] = maxHeap.top().first + nums[i];
+            maxHeap.push({dp[i], i});
         }
-        return f[n - 1];
+        return dp[size-1];
     }
 };
