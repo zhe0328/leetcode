@@ -1,7 +1,7 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        sort(coins.begin(), coins.end());
+        // sort(coins.begin(), coins.end());
         int size = coins.size();
         vector<int> dp(amount+1, amount+1);
         dp[0] = 0;
@@ -10,9 +10,9 @@ public:
                 if (coins[j] <= i){
                     dp[i] = min(dp[i], dp[i-coins[j]]+1);
                 }
-                else {
-                    break;
-                }
+                // else {
+                //     break;
+                // }
             }
         }
         return dp[amount] <= amount ? dp[amount] : -1;
