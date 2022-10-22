@@ -7,7 +7,7 @@ public:
             if (prices[i] < minPrice){
                 minPrice = prices[i];
             }
-            else if (prices[i]-minPrice > res){
+            if (prices[i]-minPrice > res){
                 res = prices[i]-minPrice;
             } 
         }
